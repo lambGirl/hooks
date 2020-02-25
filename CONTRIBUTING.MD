@@ -16,7 +16,7 @@
 
 如果你想新增一个 Hooks，我们建议你先建立一个 issue，说明该 Hook 的应用场景及用法。
 
-然后你可以基于 [contribute_template](https://github.com/umijs/hooks/tree/master/contribute_template) 来初始化一个 Hook。
+然后你可以基于已有 Hook 来初始化一个新的 Hook。
 
 ## Pull Request
 
@@ -33,7 +33,7 @@
 
 ## 开发流程
 
-在你 clone 代码并且使用 `npm install` 安装完依赖后，你还可以运行下面几个常用的命令：
+在你 clone 代码并且使用 `npm run init` 安装完依赖后，你还可以运行下面几个常用的命令：
 
 1. `npm start` 在本地运行 `@umijs/hooks` 网站。
 
