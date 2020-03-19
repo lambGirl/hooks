@@ -1,10 +1,13 @@
 ---
 title: useRequest
-order: 1000
+nav:
+  title: Hooks
+  path: /zh-CN/hooks
 group:
   title: Async
   path: /async
-  order: 1000
+  order: 1
+legacy: /zh-CN/async
 ---
 
 # useRequest
@@ -148,7 +151,7 @@ const {
 | initialData          | 默认的 data                                                                                                                                                                                                                                                              | `any`                                   | -       |
 | refreshDeps          | 在 `manual = false` 时，`refreshDeps` 变化，会触发 service 重新执行                                                                                                                                                                                                      | `any[]`                                 | `[]`    |
 | formatResult         | 格式化请求结果                                                                                                                                                                                                                                                           | `(response: any) => any`                | -       |
-| onSuccess            | <ul><li> service resolve 时触发，参数为 `data` 和 `params` </li><li> 如果有 `formmatResult` ，则 `data` 为格式化后数据。</li></ul>                                                                                                                                       | `(data: any, params: any[]) => void`    | -       |
+| onSuccess            | <ul><li> service resolve 时触发，参数为 `data` 和 `params` </li><li> 如果有 `formatResult` ，则 `data` 为格式化后数据。</li></ul>                                                                                                                                       | `(data: any, params: any[]) => void`    | -       |
 | onError              | service 报错时触发，参数为 `error` 和 `params`。                                                                                                                                                                                                                         | `(error: Error, params: any[]) => void` | -       |
 | fetchKey             | 根据 params，获取当前请求的 key，设置之后，我们会在 `fetches` 中同时维护不同 `key` 值的请求状态。                                                                                                                                                                        | `(...params: any[]) => string`          | -       |
 | cacheKey             | <ul><li> 请求唯一标识。如果设置了 `cacheKey`，我们会启用缓存机制 </li><li> 我们会缓存每次请求的 `data` , `error` , `params` , `loading` </li><li> 在缓存机制下，同样的请求我们会先返回缓存中的数据，同时会在背后发送新的请求，待新数据返回后，重新触发数据更新</li></ul> | `string`                                | -       |
@@ -357,6 +360,40 @@ export function ({children})=>{
     </UseAPIProvider>
   )
 }
+```
+
+## FAQ
+
+### 1. 我可以在一个组件中使用多个 useRequest 吗？
+
+可以的，建议您像下面这样使用。
+
+```javascript
+
+const firstRequest = useReqeust(service);
+const secondRequest = useReqeust(service);
+
+// firstRequest.loading
+// firstRequest.data
+
+// secondRequest.loading
+// secondRequest.data
+```
+
+### 2. 我如何使用 umi-request 的 `use` `errorHandler` 等？
+
+你可以将处理完后的 `request` 通过 `requsetMehod` 配置一下即可。
+
+```javascript
+// 你自己封装的 request
+import { request } from '@/utils/request';
+import { UseAPIProvider } from '@umijs/use-request';
+
+<UseAPIProvider value={{
+  requestMethod: request,
+}}>
+
+</UseAPIProvider>
 ```
 
 ## 致谢

@@ -1,6 +1,6 @@
 {
   "name": "@umijs/hooks",
-  "version": "1.6.2",
+  "version": "1.8.0",
   "description": "react hooks library",
   "keywords": [
     "umi hooks",
@@ -28,7 +28,7 @@
     "package.json"
   ],
   "dependencies": {
-    "@umijs/use-request": "^1.1.2",
+    "@umijs/use-request": "^1.3.0",
     "intersection-observer": "^0.7.0",
     "lodash.isequal": "^4.5.0",
     "resize-observer-polyfill": "^1.5.1",
@@ -45,5 +45,6 @@
   "engines": {
     "node": ">=8.0.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "gitHead": "4ea8f5c04c06eff2a33b2be473a8f7460909bebb"
 }

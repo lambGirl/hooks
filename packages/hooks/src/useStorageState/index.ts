@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import useUpdateEffect from '../useUpdateEffect';
 
+<<<<<<< HEAD
 /**
  * 定义参数
  */
@@ -8,10 +10,21 @@ interface IFuncUpdater<T> {
 }
 
 // 验证是不是Function
+=======
+export interface IFuncUpdater<T> {
+  (previousState?: T): T;
+}
+
+export type StorageStateDefaultValue<T> = T | IFuncUpdater<T>;
+
+export type StorageStateResult<T> = [T | undefined, (value: StorageStateDefaultValue<T>) => void];
+
+>>>>>>> ed3b594ff98741797dcc232bab711ab5fe993e3d
 function isFunction<T>(obj: any): obj is T {
   return typeof obj === 'function';
 }
 
+<<<<<<< HEAD
 // 定义useStorageState
 /**
  *
@@ -21,6 +34,13 @@ function isFunction<T>(obj: any): obj is T {
  */
 function useStorageState<T>(storage: Storage, key: string, defaultValue?: T | IFuncUpdater<T>) {
   // 定义state
+=======
+function useStorageState<T>(
+  storage: Storage,
+  key: string,
+  defaultValue?: StorageStateDefaultValue<T>
+): StorageStateResult<T> {
+>>>>>>> ed3b594ff98741797dcc232bab711ab5fe993e3d
   const [state, setState] = useState<T | undefined>(() => getStoredValue());
 
   // 获取StoredValue
@@ -47,9 +67,13 @@ function useStorageState<T>(storage: Storage, key: string, defaultValue?: T | IF
     if (typeof value === 'undefined') {
       // 移除key对象
       storage.removeItem(key);
+<<<<<<< HEAD
       // 设置初始值
       setState(defaultValue);
       // 判断value是否为Function
+=======
+      setState(undefined);
+>>>>>>> ed3b594ff98741797dcc232bab711ab5fe993e3d
     } else if (isFunction<IFuncUpdater<T>>(value)) {
       // 获取previousState = getStoreValue();
       const previousState = getStoredValue();
@@ -69,7 +93,15 @@ function useStorageState<T>(storage: Storage, key: string, defaultValue?: T | IF
       setState(value);
     }
   }
+<<<<<<< HEAD
   // 返回state； updateState
+=======
+
+  useUpdateEffect(() => {
+    setState(getStoredValue());
+  }, [key]);
+
+>>>>>>> ed3b594ff98741797dcc232bab711ab5fe993e3d
   return [state, updateState];
 }
 

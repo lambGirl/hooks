@@ -1,10 +1,13 @@
 ---
 title: useRequest
-order: 1000
+nav:
+  title: Hooks
+  path: /hooks
 group:
   title: Async
   path: /async
-  order: 1000
+  order: 1
+legacy: /async
 ---
 
 # useRequest
@@ -148,7 +151,7 @@ All Options are optional.
 | initialData          | initial data                                                                                                                                                                                                                                                                                                                                                                                               | `any`                                   | -       |
 | refreshDeps          | When `manual = false`,`refreshDeps` changes will trigger the service to re-execute                                                                                                                                                                                                                                                                                                                         | `any[]`                                 | `[]`    |
 | formatResult         | Format request results                                                                                                                                                                                                                                                                                                                                                                                     | `(response: any) => any`                | -       |
-| onSuccess            | <ul><li> Triggered when the service resolved, the parameters are `data` and` params` </li><li> If `formmatResult` is present,` data` is the formatted data.</li></ul>                                                                                                                                                                                                                                      | `(data: any, params: any[]) => void`    | -       |
+| onSuccess            | <ul><li> Triggered when the service resolved, the parameters are `data` and` params` </li><li> If `formatResult` is present,` data` is the formatted data.</li></ul>                                                                                                                                                                                                                                      | `(data: any, params: any[]) => void`    | -       |
 | onError              | Triggered when the service reports an error. The parameters are `error` and` params`.                                                                                                                                                                                                                                                                                                                      | `(error: Error, params: any[]) => void` | -       |
 | fetchKey             | According to params, get the key of the current request. After setting, we will maintain the request status of different key values ​​at the same time in fetches.                                                                                                                                                                                                                                             | `(...params: any[]) => string`          | -       |
 | cacheKey             | <ul><li> Request a unique identifier. If `cacheKey` is set, we will enable the cache mechanism</li><li> We cache `data`,` error`, `params`,` loading` for each request </li><li> Under the cache mechanism, the same request will return the data in the cache first, and a new request will be sent behind the scene. After the new data is returned, the data update will be triggered again. </li></ul> | `string`                                | -       |
@@ -356,6 +359,39 @@ export function ({children})=>{
     </UseAPIProvider>
   )
 }
+```
+## FAQ
+
+### 1. Can I use multiple useRequests in a component?
+
+Yes, You shoud use it like this.
+
+```javascript
+
+const firstRequest = useReqeust(service);
+const secondRequest = useReqeust(service);
+
+// firstRequest.loading
+// firstRequest.data
+
+// secondRequest.loading
+// secondRequest.data
+```
+
+### 2. How do I use umi-request's `use` `errorHandler` etc.?
+
+You can configure the `request` after processing by `requsetMehod`.
+
+```javascript
+// your request
+import { request } from '@/utils/request';
+import { UseAPIProvider } from '@umijs/use-request';
+
+<UseAPIProvider value={{
+  requestMethod: request,
+}}>
+
+</UseAPIProvider>
 ```
 
 ## Thanks
