@@ -6,8 +6,8 @@
  * desc.zh-CN: 通过 cacheKey 可以实现 Form 和 Table 数据缓存。这是一个 antd v3 示例，antd v4 示例见 [链接](href)。
  */
 
-import { useFormTable } from '@umijs/hooks'
-import { PaginatedParams } from '@umijs/hooks/es/useFormTable';
+import { useFormTable } from '@umijs/hooks';
+import { PaginatedParams } from '@umijs/hooks/useFormTable/lib';
 import { Button, Form, Input, Table } from 'antd';
 import React, { useState } from 'react';
 
@@ -25,11 +25,15 @@ interface Result {
   list: Item[];
 }
 
+const getTableData = ({ current, pageSize }: PaginatedParams[0], formData: Object): Promise<Result> => {
+  let query = `page=${current}&size=${pageSize}`;
+  Object.entries(formData).forEach(([key, value]) => {
+    if (value) {
+      query += `&${key}=${value}`
+    }
+  });
 
-const getTableData = ({ current, pageSize }: PaginatedParams[0], formData): Promise<Result> => {
-  console.log(current, pageSize);
-  console.log('formData', formData);
-  return fetch(`https://randomuser.me/api?results=55&page=${current}&size=${pageSize}`)
+  return fetch(`https://randomuser.me/api?results=55&${query}`)
     .then(res => res.json())
     .then(res => ({
       total: res.info.results,

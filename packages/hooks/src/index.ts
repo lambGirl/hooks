@@ -31,7 +31,16 @@ import useInViewport from './useInViewport';
 import useKeyPress from './useKeyPress';
 import useEventListener from './useEventListener';
 import useHover from './useHover';
+import useUnmount from './useUnmount';
 import useFormTable from './useFormTable';
+import useSet from './useSet';
+import usePersistFn from './usePersistFn';
+import useMap from './useMap';
+import useCreation from './useCreation'
+import { useDrag, useDrop } from './useDrop';
+import useCounter from './useCounter'
+import useMount from './useMount';
+import useUpdate from './useUpdate'
 
 const useControlledValue: typeof useControllableValue = function (...args) {
   console.warn(
@@ -77,5 +86,15 @@ export {
   useEventListener,
   useHover,
   useRequest,
-  useFormTable
+  useFormTable,
+  useUnmount,
+  useSet,
+  usePersistFn,
+  useMap,
+  useCreation,
+  useDrag,
+  useDrop,
+  useMount,
+  useCounter,
+  useUpdate,
 };
