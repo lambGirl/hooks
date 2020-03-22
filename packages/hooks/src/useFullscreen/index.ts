@@ -5,16 +5,25 @@ import screenfull from 'screenfull';
 import useBoolean from '../useBoolean';
 
 export interface Options<T> {
+  // 可选项，如果未传入则会监听返回结果中的 ref，否则会监听传入的节点
   dom?: T | (() => T) | null;
+  // 监听退出全屏
   onExitFull?: () => void;
+  // 监听全屏
   onFull?: () => void;
 }
 
 export interface Result<T> {
+  // 是否全屏
   isFullscreen: boolean;
+  // 设置全屏
   setFull: () => void;
+  // 退出全屏
   exitFull: () => void;
+  // 切换全屏
   toggleFull: () => void;
+  
+  //当未传入 dom 参数时，将 ref 绑定给需全屏的节点
   ref?: MutableRefObject<T>;
 }
 

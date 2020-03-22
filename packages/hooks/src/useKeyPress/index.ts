@@ -1,12 +1,17 @@
 import { useEffect, useCallback, useRef, RefObject } from 'react';
 
+/**
+ * 一个优雅的管理 keyup 和 keydown 键盘事件的 Hook，支持键盘组合键，定义键盘事件的 key 和 keyCode 别名输入 。
+ */
 export type KeyPredicate = (event: KeyboardEvent) => boolean;
 export type keyType = KeyboardEvent['keyCode'] | KeyboardEvent['key'];
 export type KeyFilter = keyType | Array<keyType> | ((event: KeyboardEvent) => boolean);
 export type EventHandler = (event: KeyboardEvent) => void;
 export type keyEvent = 'keydown' | 'keyup';
 export type RefType = HTMLElement | (() => HTMLElement | null);
+
 export type EventOption = {
+  // 触发事件
   events?: Array<keyEvent>;
   target?: Window | RefType;
 };
@@ -128,12 +133,16 @@ function genKeyFormater(keyFilter: any): KeyPredicate {
 const defaultEvents: Array<keyEvent> = ['keydown'];
 
 function useKeyPress<T extends HTMLElement = HTMLInputElement>(
+  // 支持键盘事件中的 key 和 keyCode，支持回调方式返回 boolean 判断，支持别名使用
   keyFilter: KeyFilter,
+  // 事件回调函数
   eventHandler: EventHandler = noop,
   option: EventOption = {},
 ): RefObject<T> {
   const { events = defaultEvents, target } = option;
+  // 定义dom
   const element = useRef<T>();
+  // 定义事件回调
   const callbackRef = useRef(eventHandler);
   callbackRef.current = eventHandler;
 
