@@ -1,3 +1,6 @@
+/**
+ * 强制组件重新渲染的 hook
+ */
 import { useCallback, useState } from 'react';
 
 const useUpdate = () => {
