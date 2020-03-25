@@ -22,6 +22,7 @@ export interface Result<T> {
   exitFull: () => void;
   // 切换全屏
   toggleFull: () => void;
+
   
   //当未传入 dom 参数时，将 ref 绑定给需全屏的节点
   ref?: MutableRefObject<T>;
@@ -30,22 +31,28 @@ export interface Result<T> {
 export default <T extends HTMLElement = HTMLElement>(options?: Options<T>): Result<T> => {
   const { dom, onExitFull, onFull } = options || {};
 
+  // 声明onExitFull的方法
   const onExitFullRef = useRef(onExitFull);
   onExitFullRef.current = onExitFull;
 
+  // 声明onFull的方法
   const onFullRef = useRef(onFull);
   onFullRef.current = onFull;
 
+  // 声明需要全屏的dom
   const element = useRef<T>();
 
+  // 使用useBoolean来处理，对应的true，false；
   const { state, toggle, setTrue, setFalse } = useBoolean(false);
 
+  // 
   useLayoutEffect(() => {
     /* 非全屏时，不需要监听任何全屏事件 */
     if (!state) {
       return;
     }
 
+    // 定义
     const passedInElement = typeof dom === 'function' ? dom() : dom;
     const targetElement = passedInElement || element.current;
     if (!targetElement) {
@@ -54,6 +61,7 @@ export default <T extends HTMLElement = HTMLElement>(options?: Options<T>): Resu
 
     /* 监听退出 */
     const onChange = () => {
+      // 如果全屏，则执行切换到非满屏
       if (screenfull.isEnabled) {
         const { isFullscreen } = screenfull;
         toggle(isFullscreen);
