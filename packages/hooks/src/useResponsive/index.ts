@@ -52,6 +52,7 @@ function init() {
     const oldInfo = info;
     calculate();
     if (oldInfo === info) return;
+    // 如果存在则，执行
     for (const subscriber of subscribers) {
       subscriber();
     }
@@ -96,10 +97,14 @@ export function useResponsive() {
   const [state, setState] = useState<ResponsiveInfo>(info);
 
   useEffect(() => {
+    // 定义设置对应的info
     const subscriber = () => {
       setState(info);
     };
+
+    // 添加对应的值
     subscribers.add(subscriber);
+    // 离开时，清除副作用
     return () => {
       subscribers.delete(subscriber);
     };
